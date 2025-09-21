@@ -51,7 +51,7 @@ if not jobs_df.empty and resume_file:
         # --- Process Resume ---
         with st.spinner("Analyzing resume..."):
             resume_text = extract_resume_text(resume_file)
-            score, verdict, missing, score_hard, score_semantic = calculate_relevance(resume_text, jd_text)
+            score, verdict, missing, score_hard, score_semantic, section_scores = calculate_relevance(resume_text, jd_text)
             feedback = generate_feedback(missing)
 
             # Save result
@@ -87,3 +87,9 @@ if not jobs_df.empty and resume_file:
         st.warning("No jobs match your filter. Please adjust location or Job ID.")
 elif resume_file and jobs_df.empty:
     st.warning("No job postings available yet. Post a job in the sidebar first!")
+st.markdown("---")  # horizontal line
+st.markdown(
+    "<p style='text-align:center; color:gray; font-size:12px;'>Made with ❤️ by Charmi Reddy</p>", 
+    unsafe_allow_html=True
+)
+
