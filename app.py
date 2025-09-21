@@ -122,9 +122,9 @@ if not results_df.empty:
     # Optional filters for job role, location, and shortlisting
     col1, col2, col3 = st.columns(3)
     with col1:
-        role_filter = st.selectbox("Filter by Role", ["All"] + sorted(results_df["Role"].unique()))
+        role_filter = st.selectbox("Filter by Role", ["All"] + sorted(results_df["Role"].unique()), key="role_filter")
     with col2:
-        loc_filter = st.selectbox("Filter by Location", ["All"] + sorted(results_df["Location"].unique()))
+        loc_filter = st.selectbox("Filter by Location", ["All"] + sorted(results_df["Location"].unique()), key="loc_filter_dashboard")
     with col3:
         shortlist_filter = st.selectbox("Shortlisted Only?", ["All", "YES", "NO"])
 
