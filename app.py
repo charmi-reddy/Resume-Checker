@@ -9,6 +9,7 @@ import altair as alt
 st.set_page_config(page_title="Resume Relevance Checker", layout="wide")
 st.title("Automated Resume Relevance Check System")
 
+
 # --- JOB POSTING SECTION ---
 st.sidebar.header("Post a New Job")
 job_role = st.sidebar.text_input("Job Role")
@@ -159,3 +160,4 @@ st.markdown(
     "<p style='text-align:center; color:gray; font-size:12px;'>Made with ❤️ by Team Crazy Smart</p>", 
     unsafe_allow_html=True
 )
+
