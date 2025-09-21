@@ -1,0 +1,9 @@
+streamlit
+PyMuPDF
+pdfplumber
+python-docx
+docx2txt
+scikit-learn
+rapidfuzz
+sentence-transformers
+sqlite-utils
