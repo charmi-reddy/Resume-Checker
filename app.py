@@ -6,6 +6,36 @@ from database import save_result, save_job, get_jobs
 import pandas as pd
 import altair as alt
 
+# --- Custom CSS for background & styling ---
+st.markdown(
+    """
+    <style>
+    /* Page background */
+    .stApp {
+        background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+        background-size: cover;
+    }
+
+    /* Card-like sections */
+    .css-1d391kg {  /* Streamlit container class may vary */
+        background: rgba(255,255,255,0.85);
+        padding: 1rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Center footer text */
+    .footer {
+        text-align:center;
+        color:gray;
+        font-size:12px;
+        margin-top:20px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.set_page_config(page_title="Resume Relevance Checker", layout="wide")
 st.title("Automated Resume Relevance Check System")
 
@@ -89,8 +119,11 @@ elif resume_file and jobs_df.empty:
     st.warning("No job postings available yet. Post a job in the sidebar first!")
 st.markdown("---")  # horizontal line
 
-# --- PLACEMENT TEAM DASHBOARD ---
+# --- PLACEMENT TEAM DASHBOARD WITH NAVIGATION ---
 st.header("Placement Team Dashboard")
+
+nav_option = st.radio("Navigate Dashboard", ["All Results", "Shortlisted Only"])
+
 import sqlite3
 
 # Load all results and join with job details
@@ -118,23 +151,24 @@ if not results_df.empty:
     # Shortlisted column: High & Medium verdicts = YES, else NO
     results_df["Shortlisted"] = results_df["Verdict"].apply(lambda v: "YES" if v in ["High", "Medium"] else "NO")
     
+    # Apply navigation filter
+    if nav_option == "Shortlisted Only":
+        filtered_df = results_df[results_df["Shortlisted"] == "YES"]
+    else:
+        filtered_df = results_df.copy()
+    
     st.subheader("Resume Shortlisting Table")
-    # Optional filters for job role, location, and shortlisting
-    col1, col2, col3 = st.columns(3)
+    # Optional filters for job role and location
+    col1, col2 = st.columns(2)
     with col1:
-        role_filter = st.selectbox("Filter by Role", ["All"] + sorted(results_df["Role"].unique()))
+        role_filter = st.selectbox("Filter by Role", ["All"] + sorted(filtered_df["Role"].unique()))
     with col2:
-        loc_filter = st.selectbox("Filter by Location", ["All"] + sorted(results_df["Location"].unique()))
-    with col3:
-        shortlist_filter = st.selectbox("Shortlisted Only?", ["All", "YES", "NO"])
-
-    filtered_df = results_df.copy()
+        loc_filter = st.selectbox("Filter by Location", ["All"] + sorted(filtered_df["Location"].unique()))
+    
     if role_filter != "All":
         filtered_df = filtered_df[filtered_df["Role"] == role_filter]
     if loc_filter != "All":
         filtered_df = filtered_df[filtered_df["Location"] == loc_filter]
-    if shortlist_filter != "All":
-        filtered_df = filtered_df[filtered_df["Shortlisted"] == shortlist_filter]
 
     st.dataframe(
         filtered_df[
@@ -156,6 +190,6 @@ else:
     st.info("No resume evaluations to display yet. Once students upload resumes, results will appear here.")
 
 st.markdown(
-    "<p style='text-align:center; color:gray; font-size:12px;'>Made with ❤️ by Team Crazy Smart</p>", 
+    "<p class='footer'>Made with ❤️ by Team Crazy Smart</p>", 
     unsafe_allow_html=True
 )
