@@ -7,10 +7,10 @@ import pandas as pd
 import altair as alt
 
 st.set_page_config(page_title="Resume Relevance Checker", layout="wide")
-st.title("📄 Automated Resume Relevance Check System")
+st.title("Automated Resume Relevance Check System")
 
 # --- JOB POSTING SECTION ---
-st.sidebar.header("📌 Post a New Job")
+st.sidebar.header("Post a New Job")
 job_role = st.sidebar.text_input("Job Role")
 job_id = st.sidebar.text_input("Job ID")
 location = st.sidebar.text_input("Location")
@@ -20,12 +20,12 @@ if st.sidebar.button("Post Job"):
     if job_role and job_id and location and jd_file_post:
         jd_text_post = extract_jd_text(jd_file_post)
         save_job(job_role, job_id, location, jd_file_post.name, jd_text_post)
-        st.sidebar.success(f"✅ Job '{job_role}' ({job_id}) posted successfully!")
+        st.sidebar.success(f"Job '{job_role}' ({job_id}) posted successfully!")
     else:
-        st.sidebar.error("⚠️ Please fill all fields and upload JD.")
+        st.sidebar.error("Please fill all fields and upload JD.")
 
 # --- RESUME UPLOAD SECTION ---
-st.header("📥 Upload Resume for Evaluation")
+st.header("Upload Resume for Evaluation")
 resume_file = st.file_uploader("Upload Resume (PDF/DOCX)", type=["pdf", "docx"])
 
 jobs_df = get_jobs()
@@ -49,7 +49,7 @@ if not jobs_df.empty and resume_file:
         jd_text = filtered_df[filtered_df["job_id"] == selected_job_id]["jd_text"].values[0]
 
         # --- Process Resume ---
-        with st.spinner("🔎 Analyzing resume..."):
+        with st.spinner("Analyzing resume..."):
             resume_text = extract_resume_text(resume_file)
             score, verdict, missing, score_hard, score_semantic = calculate_relevance(resume_text, jd_text)
             feedback = generate_feedback(missing)
@@ -61,7 +61,7 @@ if not jobs_df.empty and resume_file:
             col1, col2 = st.columns([1, 1])
 
             with col1:
-                st.subheader("📊 Score Breakdown")
+                st.subheader("Score Breakdown")
                 df_chart = pd.DataFrame({
                     "Match Type": ["Hard Match (Keywords)", "Semantic Match (Context)"],
                     "Score": [score_hard, score_semantic]
@@ -75,12 +75,12 @@ if not jobs_df.empty and resume_file:
                 st.markdown(f"**Verdict:** {verdict}  |  **Relevance Score:** {score}/100")
 
             with col2:
-                st.subheader("📝 Feedback & Missing Elements")
+                st.subheader("Feedback & Missing Elements")
                 if missing:
                     for item in missing:
                         st.markdown(f"- {item}")
                 else:
-                    st.write("✅ None! Your resume is comprehensive.")
+                    st.write("None! Your resume is comprehensive.")
                 st.write("**Suggestions:**", feedback)
 
     else:
