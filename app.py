@@ -88,10 +88,6 @@ if not jobs_df.empty and resume_file:
 elif resume_file and jobs_df.empty:
     st.warning("No job postings available yet. Post a job in the sidebar first!")
 st.markdown("---")  # horizontal line
-st.markdown(
-    "<p style='text-align:center; color:gray; font-size:12px;'>Made with ❤️ by Charmi Reddy</p>", 
-    unsafe_allow_html=True
-)
 
 # --- PLACEMENT TEAM DASHBOARD ---
 st.header("Placement Team Dashboard")
@@ -158,3 +154,8 @@ if not results_df.empty:
     )
 else:
     st.info("No resume evaluations to display yet. Once students upload resumes, results will appear here.")
+
+st.markdown(
+    "<p style='text-align:center; color:gray; font-size:12px;'>Made with ❤️ by Team Crazy Smart</p>", 
+    unsafe_allow_html=True
+)
