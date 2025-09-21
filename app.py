@@ -93,3 +93,68 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# --- PLACEMENT TEAM DASHBOARD ---
+st.header("Placement Team Dashboard")
+import sqlite3
+
+# Load all results and join with job details
+def get_results_df():
+    conn = sqlite3.connect("results.db")
+    query = """
+        SELECT 
+            r.resume_name AS Resume,
+            j.job_role AS Role,
+            j.job_id AS JobID,
+            j.location AS Location,
+            r.score AS Score,
+            r.verdict AS Verdict,
+            r.missing AS 'Missing Elements'
+        FROM results r
+        JOIN jobs j ON r.job_id = j.job_id
+        ORDER BY j.job_id ASC, r.score DESC
+    """
+    df = pd.read_sql_query(query, conn)
+    conn.close()
+    return df
+
+results_df = get_results_df()
+if not results_df.empty:
+    # Shortlisted column: High & Medium verdicts = YES, else NO
+    results_df["Shortlisted"] = results_df["Verdict"].apply(lambda v: "YES" if v in ["High", "Medium"] else "NO")
+    
+    st.subheader("Resume Shortlisting Table")
+    # Optional filters for job role, location, and shortlisting
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        role_filter = st.selectbox("Filter by Role", ["All"] + sorted(results_df["Role"].unique()))
+    with col2:
+        loc_filter = st.selectbox("Filter by Location", ["All"] + sorted(results_df["Location"].unique()))
+    with col3:
+        shortlist_filter = st.selectbox("Shortlisted Only?", ["All", "YES", "NO"])
+
+    filtered_df = results_df.copy()
+    if role_filter != "All":
+        filtered_df = filtered_df[filtered_df["Role"] == role_filter]
+    if loc_filter != "All":
+        filtered_df = filtered_df[filtered_df["Location"] == loc_filter]
+    if shortlist_filter != "All":
+        filtered_df = filtered_df[filtered_df["Shortlisted"] == shortlist_filter]
+
+    st.dataframe(
+        filtered_df[
+            [
+                "Resume",
+                "Role",
+                "JobID",
+                "Location",
+                "Score",
+                "Verdict",
+                "Shortlisted",
+                "Missing Elements"
+            ]
+        ],
+        use_container_width=True,
+        height=500,
+    )
+else:
+    st.info("No resume evaluations to display yet. Once students upload resumes, results will appear here.")
