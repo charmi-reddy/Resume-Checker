@@ -6,14 +6,14 @@ A smart tool that scans your resume and gives instant feedback to help you impro
 
 ---
 
-## 🚀 What It Does
+##  What It Does
 
 Resume Checker analyzes your uploaded resume and returns actionable insights on structure, clarity, and formatting.  
 It helps you make your CV more recruiter-friendly with minimal effort.
 
 ---
 
-## 🧠 How It Works
+##  How It Works
 
 - Built with Python and Streamlit  
 - Uses natural language processing to understand content  
@@ -22,7 +22,7 @@ It helps you make your CV more recruiter-friendly with minimal effort.
 
 ---
 
-## 📌 Features
+##  Features
 
 - Upload your resume in seconds  
 - Get instant analysis  
@@ -32,14 +32,14 @@ It helps you make your CV more recruiter-friendly with minimal effort.
 
 ---
 
-## 💡 Why It Matters
+##  Why It Matters
 
 Your first impression is often your resume.  
 This tool gives you real, data-driven feedback so you can refine your narrative and present your best self to recruiters.
 
 ---
 
-## 🧩 Tech Stack
+##  Tech Stack
 
 - Python  
 - Streamlit  
@@ -48,7 +48,7 @@ This tool gives you real, data-driven feedback so you can refine your narrative 
 
 ---
 
-## 📍 Try It Live
+##  Try It Live
 
 Open the link above, upload your resume, and see the magic happen.
 
