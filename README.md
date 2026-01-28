@@ -54,4 +54,4 @@ Open the link above, upload your resume, and see the magic happen.
 
 ---
 
-Made with practicality and simplicity in mind — because a better resume gets you better opportunities. 💼✨
+Made with practicality and simplicity in mind — because a better resume gets you better opportunities. 💼
